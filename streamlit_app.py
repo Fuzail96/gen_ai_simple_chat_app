@@ -12,12 +12,8 @@ st.title("Interactive Generative AI Chatbot")
 question = st.text_input("Ask a question:")
 
 if st.button("Get Answer") and question:
-    st.session_state.chat_history.append([
-        {"role": "user", "parts": "Hello!"},
-        {"role": "model", "parts": "Hi!, Ask me a question."},
-    ]
-    )
-    body = {"question": question, "history": st.session_state.chat_history[-1]}
+    chat_history = st.session_state.chat_history[-1] if st.session_state.chat_history != [] else []
+    body = {"question": question, "history": chat_history}
     response = requests.post(API_URL, json=body)
 
     if response.status_code == 200:
